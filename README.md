@@ -1,233 +1,73 @@
-# Humotica
-Humotica v1 — Human-Machine Semantic Interaction Layer
+# JTel Identity Standard (JIS)
 
-Part of the JTel Semantic Safety Core
-Author: Jasper van de Meent (JTel Systems)
-Status: Draft v1.0
+**A Universal Semantic Layer for Secure, Intent-Driven Digital Interaction.**
 
-🌐 Wat is Humotica?
+---
 
-Humotica is de mensgerichte semantische laag voor digitale systemen.
-Het vertaalt menselijk gedrag, bedoeling, timing en context naar digitale semantiek die door apparaten, software en autonome agents veilig geïnterpreteerd kan worden.
+### The Digital World is Broken. Let's Fix It.
 
-Waar traditionele protocollen alleen events zien (tap, klik, swipe, call),
-leest Humotica de bedoeling achter die actie.
+We live in a world of 40+ digital channels: messaging apps, email, IoT devices, AI agents, and countless APIs. They don't speak the same language, they don't share context, and they fundamentally cannot be trusted. Traditional authentication proves *who* you are, but fails to answer the most important questions: *why* are you here, *what* is your intent, and is this interaction *safe* and *logical* right now?
 
-Humotica is daarmee de ontbrekende schakel tussen:
+JIS (JTel Identity Standard) is an open-source semantic layer designed to fix this. It's not a replacement for existing security, but a powerful semantic fabric woven *over* any protocol. It provides clarity on provenance (origin), enhances routing, and ensures every interaction is driven by a verifiable purpose. JIS wraps any communication in a universal blanket of trust, context, and intent, enabling truly secure and humane interaction between people, devices, and AI.
 
-mens → device
+### How It Works: The Story of a Secure Call
 
-device → agent
+Imagine you receive a phone call, supposedly from your bank. Is it a legitimate fraud alert, or a sophisticated phishing attack? Here’s how JIS handles it:
 
-mens → AI
+**Step 1: The Handshake (`FIR/A`)**
+Years ago, your bank registered its communication system with the JIS network. A **FIR/A (First Initiation Revoke/Accept)** was exchanged, a verifiable agreement that initiates a trusted relationship and establishes a verified identity.
 
-AI → mens
+**Step 2: The Intent (`TIBET`)**
+The bank's system doesn't just "call you." It issues a **TIBET (Time-based Intent Token)**, a secure work order with a clear purpose: `{"intent": "initiate_secure_call", "user": "JohnDoe", "reason": "fraud_alert"}`.
 
-device → device (met mensgerichte veiligheid)
+**Step 3: The Context Check (`Humotica` & `F2F4I`)**
+Your personal `Brein` (the JIS engine on your device) receives this TIBET. The **Humotica** layer immediately analyzes the context: it’s 3 AM, and this is the fifth call attempt. This is highly irregular. The **F2F4I (Fail2Flag4Intent)** semantic firewall flags this as anomalous.
 
-Het is de laag die ervoor zorgt dat machines ons begrijpen,
-en dat ze nooit buiten onze bedoeling handelen.
+**Step 4: The Dialogue (`NIR`)**
+Instead of blindly connecting or blocking the call, the system initiates **NIR (Notify, Identify, Rectify)**. Your device displays a notification: *"A call from your VERIFIED Bank was flagged as unusual (time of day). Please confirm to proceed."* You unlock your phone with your fingerprint, confirming your presence and consent.
 
-🎯 Doelen van de Humotica-laag
+**Step 5: The Unbreakable Record (`Continuity Chain`)**
+The call is connected. Every step of this interaction—the TIBET, the flag, your biometric confirmation—is cryptographically hashed and linked into a **Continuity Chain**. This creates a permanent, unalterable, and perfectly auditable record of the entire event.
 
-Humotica is ontworpen om:
+**The Result:** You engaged in a secure, verified conversation, fully protected from spoofing and contextless interruptions. This is the power of JIS.
 
-Menselijke intentie te vertalen naar digitale betekenis.
+---
 
-Veiligheid te versterken door menselijk gedrag logisch te kunnen interpreteren.
+### The Core Building Blocks
 
-Autonomie van systemen (zoals Kit) te begrenzen met semantische logica.
+JIS is made possible by a set of powerful, interlocking components:
 
-Context correct te koppelen aan acties.
+*   **Identity (HID/DID):** A cryptographic, privacy-first Human or Device Identity that proves who you are without exposing personal information.
+*   **Trust Initiation (`FIR/A`):** The **First Initiation Revoke/Accept** is a verifiable exchange that acts as the genesis event for any trusted digital relationship.
+*   **The Transactional Layer (`BETTI`/`TIBET`):** Secure, time-bound "work orders" that encapsulate intent, from large multi-step tasks (`BETTI`) down to granular micro-actions (`TIBET`).
+*   **The Semantic Firewall (`F2F4I` & `NIR`):** The intelligent security layer that detects anomalies not in IP addresses, but in the logic of an interaction, and initiates a human-friendly dialogue to resolve doubt.
+*   **The Audit Trail (`Continuity Chain`):** The immutable, hashed ledger of every interaction, providing perfect traceability and accountability.
+*   **[The Human Meaning Layer (Humotica)](https://github.com/jaspertvdm/Humotica):** The soul of the machine. Humotica is a privacy-first layer that translates human behavior—interaction patterns, timing, corrections—into machine-readable semantics. It allows the system to understand the difference between a typo and malicious intent, or between an urgent tap and an idle one. It does **not** profile you; it seeks to understand your intent to keep you safe.
 
-NIR/Fail2Flag4Intent te voeden met realistische signalen.
+---
 
-Frictieloze interactie mogelijk te maken over alle apparaten en protocollen heen.
+### A Universal Standard
 
-Het maakt digitale interactie intuïtief, menswaardig en veilig.
+JIS is protocol-agnostic and designed to bring trust to any communication stack, including:
+*   SIP / VoIP (for verified, "certified" calling)
+*   WebRTC (for secure, consent-driven peer connections)
+*   HTTP / REST (for intent-bound, non-spoofable API calls)
+*   MQTT / IoT (for safe, anti-hijacking device autonomy)
 
-🔧 Wat Humotica observeert
+---
 
-(Alle observatie is minimaal, privacy-first en nooit persoonsgebonden zonder expliciete opt-in.)
+### Join the Mission
 
-Humotica kijkt alleen naar:
+JIS is an open standard designed to build a more secure, humane, and trustworthy digital future. It's a system built not just for machines to talk, but for humans and AI to understand each other.
 
-interactiepatronen (snel/traag, zeker/twijfel)
+We are preparing to present this vision to the global open-source community at events like **FOSDEM**. If you believe in a future of verifiable communication and intent-driven interaction, we invite you to review, implement, and contribute.
 
-actie-ritme (consistent / chaotisch / verdacht afwijkend)
+*   **Governance:** The project is governed by the rules in `GOVERNANCE.md`.
+*   **License:** Published under the **Jasper Open Standard License (JOSL)**, ensuring free implementation, open usage, and safe, unified evolution. See `LICENSE.md`.
 
-situatie (tijd, plaats, routine, stressmomenten)
+### Contact
 
-context (met wie, waarvoor, in welke rol)
+**Jasper van de Meent (JTel Systems)**
+📧 jtmeent@gmail.com
 
-taalvorm (wat iemand bedoelt, niet wat iemand typt)
-
-menselijke logica (past deze actie bij de situatie?)
-
-Het bouwt geen profiel,
-het detecteert alleen:
-“Is dit logisch gedrag binnen deze context?”
-
-🧠 Humotica Core Components
-1. HPI — Human Pattern Intake
-
-Micro-observatie van interactie zoals:
-
-versneld tappen
-
-trage input
-
-twijfelherhalingen
-
-correcties
-
-noodsignaalpatronen
-
-2. SCX — Semantic Corrector
-
-Corrigeert mismatch tussen actie & bedoeling.
-
-Voorbeelden:
-
-Je tikt een telefoonnummer, maar uit je patroon blijkt dat je eigenlijk een contact wilt bereiken.
-
-Je typt “help huisarts” en Humotica herkent de intentie gezondheidszorg contact.
-
-Je tapt 3× fout in paniek → flag → NIR.
-
-3. IDV — Intent Derivation
-
-Afleiden van daadwerkelijke bedoeling uit gedrag.
-
-Voorbeeld-intents:
-
-“communicatie starten”
-
-“informatie zoeken”
-
-“noodsituatie”
-
-“afbreken / stoppen”
-
-“veiligheidscheck initiëren”
-
-4. IRL — Intent Reflection Layer
-
-Humotica zet bedoelingen om in digitale intent-tokens,
-direct bruikbaar voor:
-
-JTel Intent Layer
-
-JTel Sense
-
-JTel Safety (Fail2Flag4Intent)
-
-TBET/BETTI autonomie
-
-📡 Plaats van Humotica in de JTel-stack
-                         HUMAN
-                (gedrag, bedoeling, ritme)
-                          │
-                          ▼
-                   HUMOTICA LAYER
-        (semantische interpretatie van menselijke input)
-                          │
-     ┌──────────────┬──────────────┬──────────────┐
-     │              │              │              │
-  Intent Core    Context Core    Sense Engine   Safety Core
-     │              │              │              │
-                          ▼
-                FAIL2FLAG4INTENT (F2F4I)
-       (flag → notice → handle → NIR → IO/DO/OD)
-                          │
-                          ▼
-               ROUTING / DEVICE HANDLING / KIT
-
-
-Humotica staat boven elke JTel-kernlaag.
-Niets gaat verder zonder semantische duiding.
-
-🔐 Wat Humotica NIET is
-
-geen gedragsprofilering
-
-geen psychologische analyse
-
-geen emotie- of gezichtshertkenning
-
-geen tracking-systeem
-
-geen surveillance-instrument
-
-geen advertentieprofiler
-
-Humotica is een betekenislaag, niet een “mensenscan”.
-
-Het doel is veiligheid en duidelijkheid,
-niet controle of observatie.
-
-🚨 Veiligheid en F2F4I
-
-Humotica werkt samen met Fail2Flag4Intent:
-
-Humotica ziet gedrag dat niet past bij intent of context
-
-→ dit genereert flags
-
-→ of notices
-
-→ of handle state (lockdown)
-
-→ gevolgd door NIR (Notify, Identify, Rectify)
-
-Hierdoor wordt het systeem:
-
-moeilijk te misbruiken
-
-extreem veilig
-
-mensgericht
-
-contextbewust
-
-semantisch robuust
-
-autonoom begrensd
-
-🤖 Humotica & Autonome Agents (Kit)
-
-Zodra Kit autonoom werkt:
-
-BETTI = macro-taak
-
-TBET = micro-permissies
-
-Humotica = menselijke logica voor elke stap
-
-Humotica bepaalt of autonoom gedrag menselijk gezien klopt.
-
-Zonder Humotica is autonomie gevaarlijk.
-Met Humotica is autonomie juist veiliger dan handmatige bediening.
-
-📄 Licentie
-
-Open standaard (te bepalen).
-Referentie-implementatie blijft open-source binnen JTel Identity Standard.
-
-📚 Samenvatting
-
-Humotica:
-
-maakt digitale systemen mensvriendelijk
-
-laat apparaten onze bedoeling begrijpen
-
-maakt autonomie veilig
-
-voedt de hele JTel Semantic Safety stack
-
-is privacy-first en ethisch ontworpen
-
-is de semantische basislaag van Kit en van moderne digitale interactie
-
-Humotica is de eerste echte Human–Semantics Interface.
+Open to collaboration, research partnerships, security review, and academic work.
