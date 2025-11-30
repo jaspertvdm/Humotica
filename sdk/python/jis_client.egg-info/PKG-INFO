@@ -1,0 +1,466 @@
+Metadata-Version: 2.4
+Name: jis-client
+Version: 0.1.0
+Summary: Python client SDK for JTel Identity Standard (JIS)
+Home-page: https://github.com/jaspertvdm/JTel-identity-standard
+Author: JTel / Jasper van de Meent
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Security :: Cryptography
+Classifier: Topic :: Software Development :: Libraries
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: cryptography>=42.0.0
+Requires-Dist: requests>=2.31.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: mypy>=1.0.0; extra == "dev"
+Dynamic: author
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: provides-extra
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
+
+# JIS Client SDK - Python
+
+**Officiële Python client library voor JTel Identity Standard (JIS)**
+
+Maak apps met onvervalsbare identiteit, semantische veiligheid en continue verificatie.
+
+## ✨ Features
+
+- 🔐 **DID/HID Key Management** - Device + Human identity keys
+- 🤝 **FIR/A Relationships** - Genesis moments tussen entiteiten
+- 🎯 **Intent-First** - Semantische operaties (IFT)
+- 🔗 **Continuity Chains** - Onvervalsbaar bewijs van interacties
+- 🚨 **NIR Handling** - Automatic flagging en herstel
+- 🔑 **Cryptographic Security** - Ed25519 signatures, X25519 key exchange
+- 📊 **Admin Utilities** - Health checks, metrics, event history
+
+## 📦 Installatie
+
+```bash
+pip install jis-client
+```
+
+Of vanaf source:
+
+```bash
+cd client-sdk/python
+pip install -e .
+```
+
+## 🚀 Quick Start
+
+### Minimaal Voorbeeld (5 regels)
+
+```python
+from jis_client import JISClient, DIDKey, HIDKey
+
+client = JISClient("http://localhost:18081", secret="your-secret")
+did, hid = DIDKey.generate(), HIDKey.generate()
+
+fir_a = client.init_relationship("my-app", "server", ["client"], did_key=did, hid_key=hid)
+client.send_intent(fir_a.id, "unlock_door", {"location": "home"})
+```
+
+**Dat is het!** Je hebt nu een cryptografisch beveiligde relatie met:
+- Device identity (DID)
+- Human binding (HID)
+- Immutable continuity chain
+- Semantische operaties
+
+## 📖 Uitgebreide Documentatie
+
+### 1. Client Initialisatie
+
+```python
+from jis_client import JISClient
+
+# Met shared secret
+client = JISClient(
+    router_url="http://localhost:18081",
+    secret="your-shared-secret"
+)
+
+# Of met JWT
+client = JISClient(
+    router_url="https://jis.example.com",
+    jwt_token="your-jwt-token"
+)
+```
+
+### 2. Key Management
+
+#### DID Keys (Device Identity)
+
+```python
+from jis_client import DIDKey
+
+# Generate nieuwe DID key
+did = DIDKey.generate()
+
+# Export voor opslag
+private_pem = did.export_private()  # Bewaar veilig!
+public_pem = did.export_public()    # Kan gedeeld worden
+
+# Later: laden vanuit opslag
+did = DIDKey.from_private_pem(private_pem)
+```
+
+#### HID Keys (Human Identity)
+
+```python
+from jis_client import HIDKey
+
+# Generate nieuwe HID key
+hid = HIDKey.generate()
+
+# ⚠️ KRITIEK: HID key NOOIT over netwerk sturen!
+# Alleen lokaal gebruiken voor attestaties
+
+# Create HID-DID binding
+binding_hash = hid.derive_did_binding(did)
+
+# Alleen deze hash wordt naar router gestuurd
+# Router kan binding verifiëren zonder HID te kennen
+```
+
+### 3. FIR/A Relationships
+
+#### Initialiseren
+
+```python
+fir_a = client.init_relationship(
+    initiator="mobile-app",
+    responder="api-server",
+    roles=["client", "mobile"],
+    context={
+        "device": "iPhone 15",
+        "os_version": "iOS 17",
+        "app_version": "1.0.0"
+    },
+    humotica="User John Doe starting session",
+    did_key=did,  # Optioneel
+    hid_key=hid   # Optioneel, voor binding
+)
+
+print(f"FIR/A ID: {fir_a.id}")
+print(f"Continuity hash: {fir_a.continuity_hash}")
+```
+
+#### Relationship Info Ophalen
+
+```python
+info = client.get_relationship(fir_a.id)
+print(f"Events: {info.events}")
+print(f"Current hash: {info.continuity_hash}")
+```
+
+### 4. Intent Transmission (IFT)
+
+```python
+# Send intent
+result = client.send_intent(
+    fir_a_id=fir_a.id,
+    intent="unlock_door",
+    context={
+        "location": "home",
+        "time": "2025-01-26T15:30:00Z"
+    },
+    timebox_seconds=30
+)
+
+print(f"Intent accepted. New hash: {result.continuity_hash}")
+```
+
+### 5. NIR (Notify/Identify/Rectify)
+
+#### Stuur NIR Notification
+
+```python
+# Iets onverwachts gedetecteerd
+nir = client.notify_nir(
+    fir_a_id=fir_a.id,
+    reason="unusual_location",
+    suggested_method="biometric_confirm"
+)
+```
+
+#### Bevestig NIR
+
+```python
+# Na menselijke verificatie
+confirmed = client.confirm_nir(
+    fir_a_id=fir_a.id,
+    method="biometric",
+    result="confirmed"
+)
+```
+
+### 6. Event History
+
+```python
+# Get laatste events
+events = client.get_events(fir_a.id, limit=10)
+
+for event in events:
+    print(f"Event {event.seq}:")
+    print(f"  Type: {event.payload['type']}")
+    print(f"  Time: {event.timestamp}")
+    print(f"  Hash: {event.continuity_hash[:16]}...")
+```
+
+### 7. DID Keys Ophalen
+
+```python
+keys = client.get_did_keys(fir_a.id)
+
+for entity, key_info in keys.items():
+    print(f"{entity}:")
+    print(f"  DID: {key_info.did_public_key[:50]}...")
+    print(f"  HID binding: {key_info.hid_did_binding[:16]}...")
+```
+
+### 8. Monitoring
+
+```python
+# Health check
+health = client.health_check()
+print(health["status"])  # "ok"
+
+# Metrics
+metrics = client.get_metrics()
+print(f"Relationships: {metrics['total_relationships']}")
+print(f"Events: {metrics['total_events']}")
+```
+
+## 🔒 Security Best Practices
+
+### HID Keys - KRITIEK!
+
+```python
+# ✅ GOED - HID blijft lokaal
+hid = HIDKey.generate()
+binding = hid.derive_did_binding(did)
+# Alleen binding hash wordt gestuurd
+
+# ❌ FOUT - NOOIT dit doen!
+# hid_private = hid.export_private()
+# requests.post(url, json={"hid": hid_private})  # NOOIT!
+```
+
+### DID Keys - Best Practices
+
+```python
+# ✅ GOED - Bewaar privé key veilig
+did = DIDKey.generate()
+private_pem = did.export_private()
+
+# Sla op in secure storage:
+# - iOS: Keychain
+# - Android: KeyStore
+# - Desktop: OS Keyring (keyring library)
+# - Server: HSM of encrypted vault
+
+# Public key kan gedeeld
+public_pem = did.export_public()
+```
+
+### Continuity Hash Tracking
+
+```python
+# SDK tracked automatisch continuity hashes
+client.send_intent(fir_a.id, "intent1", {})  # Hash auto-tracked
+client.send_intent(fir_a.id, "intent2", {})  # Gebruikt vorige hash
+
+# Handmatig als je wilt:
+result = client.send_intent(
+    fir_a.id,
+    "intent",
+    {},
+    continuity_hash_prev="explicit-hash"
+)
+```
+
+## 📱 App Integration Patterns
+
+### Mobile App (iOS/Android)
+
+```python
+class JISManager:
+    """Singleton voor JIS client management"""
+
+    def __init__(self):
+        self.client = JISClient(
+            router_url=os.getenv("JIS_ROUTER_URL"),
+            jwt_token=self.get_stored_token()
+        )
+        self.did = self.load_or_create_did()
+        self.hid = self.load_or_create_hid()
+        self.fir_a_id = None
+
+    def load_or_create_did(self) -> DIDKey:
+        """Load DID from secure storage or create new"""
+        stored = keychain.get("jis_did_private")
+        if stored:
+            return DIDKey.from_private_pem(stored)
+
+        did = DIDKey.generate()
+        keychain.set("jis_did_private", did.export_private())
+        return did
+
+    def load_or_create_hid(self) -> HIDKey:
+        """Load HID from secure storage or create new"""
+        stored = keychain.get("jis_hid_private")
+        if stored:
+            return HIDKey.from_private_pem(stored)
+
+        hid = HIDKey.generate()
+        keychain.set("jis_hid_private", hid.export_private())
+        return hid
+
+    def start_session(self):
+        """Initialize FIR/A for new session"""
+        self.fir_a = self.client.init_relationship(
+            initiator="mobile-app",
+            responder="api-server",
+            roles=["mobile", "client"],
+            did_key=self.did,
+            hid_key=self.hid
+        )
+        self.fir_a_id = self.fir_a.id
+
+    def send_action(self, intent: str, context: dict):
+        """Send intent with automatic error handling"""
+        try:
+            return self.client.send_intent(
+                self.fir_a_id,
+                intent,
+                context
+            )
+        except HTTPError as e:
+            if e.response.status_code == 409:
+                # Continuity hash mismatch - re-sync
+                self.sync_continuity()
+                return self.client.send_intent(
+                    self.fir_a_id,
+                    intent,
+                    context
+                )
+            raise
+```
+
+### IoT Device
+
+```python
+# Lightweight client voor resource-constrained devices
+class IoTClient:
+    def __init__(self, device_id: str):
+        self.client = JISClient(
+            router_url="https://iot.example.com",
+            secret=os.getenv("JIS_SECRET")
+        )
+        self.device_id = device_id
+        self.did = DIDKey.generate()
+        # IoT heeft vaak geen HID (geen mens direct)
+
+    def send_sensor_data(self, sensor_type: str, value: float):
+        """Send sensor reading as intent"""
+        self.client.send_intent(
+            fir_a_id=self.fir_a_id,
+            intent=f"sensor_reading_{sensor_type}",
+            context={
+                "device_id": self.device_id,
+                "value": value,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        )
+```
+
+## 🧪 Testing
+
+```bash
+# Install dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest
+
+# Run example
+python examples/basic_usage.py
+```
+
+## 📚 Voorbeelden
+
+Zie de `examples/` directory voor complete voorbeelden:
+
+- **`simple_app.py`** - Minimaal voorbeeld (5 regels)
+- **`basic_usage.py`** - Uitgebreid voorbeeld met alle features
+- **`mobile_app_pattern.py`** - Mobile app integration pattern
+- **`iot_device.py`** - IoT device voorbeeld
+
+## 🔧 Configuration
+
+### Environment Variables
+
+```bash
+# Router URL
+export JIS_ROUTER_URL="http://localhost:18081"
+
+# Authentication (kies één)
+export JIS_SHARED_SECRET="your-secret"
+# OF
+export JIS_JWT_TOKEN="your-jwt-token"
+
+# Optional
+export JIS_TIMEOUT=30  # Request timeout in seconds
+```
+
+## 🐛 Error Handling
+
+```python
+from requests import HTTPError
+
+try:
+    client.send_intent(fir_a.id, "test", {})
+except HTTPError as e:
+    if e.response.status_code == 401:
+        print("Authentication failed")
+    elif e.response.status_code == 409:
+        print("Continuity hash mismatch - chain diverged")
+    elif e.response.status_code == 400:
+        print("Bad request - check intent/role whitelists")
+    else:
+        print(f"Error: {e}")
+```
+
+## 🤝 Contributing
+
+Contributions welcome! See main repo voor guidelines.
+
+## 📄 License
+
+MIT License - zie LICENSE file
+
+## 🔗 Links
+
+- **Main Repo**: https://github.com/jaspertvdm/JTel-identity-standard
+- **Server Config**: `../../server-config/jis-test/`
+- **Documentation**: `../../ROADMAP-standardization.md`
+
+---
+
+**Versie**: 0.1.0
+**Status**: Alpha (productie-ready server, SDK in development)
