@@ -9,13 +9,18 @@ from .complexity import ComplexityAnalyzer, BettiNumbers
 from .snaft import SNAFTFirewall
 from .balans import BalansDecisionEngine
 from .hicss import HICSSController
+from .token_chain import TokenChain, TibetTokenChain, ChainToken, verify_chain_file
 
-__version__ = "1.0.0"
+__version__ = "1.1.0"
 __all__ = [
     "NaturalLawsEngine",
     "ComplexityAnalyzer",
     "BettiNumbers",
     "SNAFTFirewall",
     "BalansDecisionEngine",
-    "HICSSController"
+    "HICSSController",
+    "TokenChain",
+    "TibetTokenChain",
+    "ChainToken",
+    "verify_chain_file"
 ]
