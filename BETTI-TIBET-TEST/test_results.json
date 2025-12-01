@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-12-01 19:48:08",
+  "summary": {
+    "total": 4,
+    "passed": 4,
+    "failed": 0
+  },
+  "tests": [
+    {
+      "name": "Thundering Herd",
+      "passed": true,
+      "duration_ms": 89.35880661010742,
+      "laws_tested": [
+        "Ohm",
+        "Thermodynamics",
+        "Newton"
+      ],
+      "details": {
+        "concurrent": 50,
+        "successful": 50,
+        "errors": 0,
+        "throughput_rps": 559.5419399249729,
+        "health_actions": {
+          "OK": 50
+        },
+        "all_laws_applied": true
+      }
+    },
+    {
+      "name": "David & Goliath",
+      "passed": true,
+      "duration_ms": 5.501985549926758,
+      "laws_tested": [
+        "Archimedes",
+        "Kepler"
+      ],
+      "details": {
+        "david_priority": 1,
+        "goliath_priority": 10,
+        "david_wait_ms": 50,
+        "goliath_wait_ms": 500,
+        "david_complexity": 11.5,
+        "goliath_complexity": 29.5,
+        "david_floats": true
+      }
+    },
+    {
+      "name": "Jojo",
+      "passed": true,
+      "duration_ms": 527.8792381286621,
+      "laws_tested": [
+        "Hooke"
+      ],
+      "details": {
+        "cycles": 10,
+        "high_load_actions": {
+          "SCALE_UP": 5
+        },
+        "low_load_actions": {
+          "SCALE_DOWN": 5
+        },
+        "high_correct": true,
+        "low_correct": true,
+        "stable": true
+      }
+    },
+    {
+      "name": "Edge of Death",
+      "passed": true,
+      "duration_ms": 9.668350219726562,
+      "laws_tested": [
+        "Planck",
+        "Heisenberg",
+        "Betti"
+      ],
+      "details": {
+        "memory_mb": 256,
+        "is_quantized": true,
+        "complexity_score": 92.5,
+        "split_required": true,
+        "emergency_priority": 1,
+        "all_graceful": true
+      }
+    }
+  ]
+}
