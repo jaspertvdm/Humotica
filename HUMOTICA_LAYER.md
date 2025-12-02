@@ -4,14 +4,12 @@
 
 The Humotica Layer is an intelligent orchestration system that dynamically manages system resources based on task urgency and context. It combines voltage control, intent routing, and performance optimization to create adaptive, energy-efficient computing systems.
 
-## Core Philosophy
+## Technical Principles
 
-> "Data opslag is als de ruimte, een groot vacuum en is gebaat bij orkestratie voor bij throughput, invoer en de uiteindelijke opslagindeling en indexing."
-
-**Three Principles:**
-1. **Storage = Vacuum**: Data storage acts like space - instant write availability
-2. **RAM = Steady Flow**: Memory operates as steady flow, not waterfalls
-3. **CPU = Adaptive Voltage**: Processing power scales based on Archimedes urgency
+**Resource Management Strategy:**
+1. **Storage**: Write-optimized with immediate availability
+2. **Memory**: Consistent throughput without burst patterns
+3. **CPU**: Dynamic frequency scaling based on task urgency (1-10 scale)
 
 ## Architecture
 
@@ -303,9 +301,7 @@ The Humotica Layer is designed for:
 - **Industrial Automation**: Energy-efficient operations
 - **AI Assistants**: Intent-driven orchestration
 
-## Open Source Philosophy
-
-> "Ik doe met mijn server wat ik kan en een ander heeft de bouwstenen voor een betere robot, auto, weet ik t.. het is een algemeen goed dit."
+## Open Source
 
 This technology is open source to enable innovation across domains:
 - Build better robots with adaptive power management
@@ -317,7 +313,7 @@ This technology is open source to enable innovation across domains:
 
 ## Contributing
 
-This is a public good. Contributions welcome!
+Contributions welcome!
 
 1. Fork the repository
 2. Create a feature branch
