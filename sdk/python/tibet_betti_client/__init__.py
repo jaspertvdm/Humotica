@@ -29,6 +29,7 @@ from .tibet import Tibet, TimeWindow, Constraints
 from .context import Context, SenseRule
 from .trust_token import TrustToken, FIRARelationship
 from .websocket import TibetWebSocket
+from .balancer import ClientBalancer, balanced, configure, get_balancer
 
 __version__ = "1.0.0"
 __all__ = [
@@ -40,5 +41,9 @@ __all__ = [
     "SenseRule",
     "TrustToken",
     "FIRARelationship",
-    "TibetWebSocket"
+    "TibetWebSocket",
+    "ClientBalancer",
+    "balanced",
+    "configure",
+    "get_balancer"
 ]
