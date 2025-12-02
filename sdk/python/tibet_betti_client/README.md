@@ -1,8 +1,16 @@
-# TIBET-BETTI Python SDK
+# TIBET-BETTI Python SDK v2.0
 
 **Universal Intent Coordination for Autonomous Systems**
 
 Complete Python client for TIBET intent declaration and BETTI coordination.
+
+## NEW in v2.0: Humotica Layer Integration
+
+- **Voltage Control**: Dynamic CPU/GPU performance management based on task urgency
+- **Intent-Tech Layer**: Central orchestration hub for all data/task input
+- **34.6% Performance Boost**: Proven with real benchmarks (ECO → PERFORMANCE mode)
+- **Thermal Protection**: Automatic throttling to prevent overheating
+- **Automatic Scaling**: Intent urgency (1-10) → voltage profile mapping
 
 ## 🚀 Quick Start
 
@@ -55,6 +63,40 @@ client.send_tibet(
     context={"room": "living_room", "brightness": 80}
 )
 ```
+
+### v2.0 Features: Raw Input Processing with Automatic Voltage Scaling
+
+```python
+# Process raw natural language input
+# Automatically: parses intent → determines urgency → scales voltage → routes to handler
+result = await client.process_raw_input(
+    raw_input="call emergency services now!",
+    session_id="user_session_123"
+)
+
+# Returns:
+# {
+#   "intent": ParsedIntent(urgency=10, route="direct", ...),
+#   "response": {...handler response...},
+#   "voltage_profile": "turbo",  # Auto-scaled to TURBO for emergency!
+#   "voltage_profile_changed": {
+#     "from": "balanced",
+#     "to": "turbo",
+#     "reason": "High urgency intent (10/10)"
+#   }
+# }
+```
+
+**Automatic Urgency → Voltage Mapping:**
+- Urgency 9-10: TURBO mode (emergency calls, critical tasks)
+- Urgency 7-8: PERFORMANCE mode (high-priority operations)
+- Urgency 4-6: BALANCED mode (normal operations)
+- Urgency 1-3: ECO mode (background tasks)
+
+**Performance Results (HP DL360 Server):**
+- ECO mode: 4368.62 events/sec (15-30W)
+- PERFORMANCE mode: 5882.50 events/sec (65-95W)
+- **Boost: +34.6% performance!** 🚀
 
 ## 📖 Core Concepts
 
@@ -240,6 +282,64 @@ ws.start(block=False)
 # Close when done
 ws.close()
 ```
+
+### ✅ Voltage Control & Intent-Tech Layer (v2.0)
+
+```python
+from tibet_betti_client import (
+    get_voltage_controller,
+    get_intent_layer,
+    VoltageProfile
+)
+
+# Access global voltage controller
+voltage = get_voltage_controller()
+await voltage.start()
+
+# Manual profile switching
+await voltage.set_profile(VoltageProfile.PERFORMANCE)
+
+# Check current temperature
+temp = await voltage._get_cpu_temperature()
+print(f"CPU: {temp}°C")
+
+# Automatic urgency-based profile selection
+profile = await voltage.profile_for_urgency(urgency=9)  # Returns TURBO
+
+# Access intent-tech layer
+intent_layer = get_intent_layer()
+await intent_layer.start()
+
+# Process raw input (intent parsing + routing)
+result = await intent_layer.process(
+    raw_input="call mom",
+    context={"user_id": "user_123"}
+)
+
+print(result["intent"].intent_type)  # COMMAND
+print(result["intent"].route)        # DIRECT
+print(result["intent"].urgency)      # 9 (high priority)
+
+# Or use the unified client method (recommended)
+result = await client.process_raw_input(
+    raw_input="what's the weather like?",
+    session_id="session_456"
+)
+# Automatically: parses → routes → scales voltage → executes
+```
+
+**Voltage Profiles:**
+- **ECO**: 800-1200 MHz, 15-30W (background tasks)
+- **BALANCED**: 1200-1800 MHz, 45-65W (normal operation)
+- **PERFORMANCE**: 2000-2400 MHz, 65-95W (high-priority)
+- **TURBO**: 2400-3000 MHz, no cap (emergency/critical)
+- **THERMAL_THROTTLE**: 800-1000 MHz, <20W (overheat protection)
+
+**Intent Routes:**
+- **BETTI**: Heavy compute (LLM, video processing)
+- **KIT**: Knowledge queries, semantic search
+- **DIRECT**: Simple CRUD, status checks
+- **MULTI_STAGE**: Complex workflows
 
 ## 🎯 Complete Example
 

@@ -28,9 +28,22 @@ def test_imports():
             SenseRule,
             TrustToken,
             FIRARelationship,
-            TibetWebSocket
+            TibetWebSocket,
+            # v2.0 features
+            VoltageController,
+            VoltageProfile,
+            ProfileConfig,
+            get_voltage_controller,
+            IntentTechLayer,
+            IntentParser,
+            SenseRouter,
+            StateManager,
+            ParsedIntent,
+            IntentType,
+            IntentRoute,
+            get_intent_layer
         )
-        print("  ✓ All imports successful")
+        print("  ✓ All imports successful (including v2.0 features)")
         return True
     except ImportError as e:
         print(f"  ✗ Import failed: {e}")
@@ -83,6 +96,41 @@ def test_classes():
         assert client.betti_url == "http://localhost:18081"
         assert client.kit_url == "http://localhost:8000"
         print("  ✓ TibetBettiClient initialization works")
+
+        # Test v2.0 features
+        from tibet_betti_client import (
+            VoltageProfile,
+            VoltageController,
+            IntentType,
+            IntentRoute,
+            get_voltage_controller,
+            get_intent_layer
+        )
+
+        # Test VoltageProfile enum
+        assert VoltageProfile.ECO.value == "eco"
+        assert VoltageProfile.TURBO.value == "turbo"
+        print("  ✓ VoltageProfile enum works")
+
+        # Test IntentType enum
+        assert IntentType.COMMAND.value == "command"
+        assert IntentType.QUERY.value == "query"
+        print("  ✓ IntentType enum works")
+
+        # Test IntentRoute enum
+        assert IntentRoute.BETTI.value == "betti"
+        assert IntentRoute.KIT.value == "kit"
+        print("  ✓ IntentRoute enum works")
+
+        # Test global singletons
+        voltage = get_voltage_controller()
+        assert isinstance(voltage, VoltageController)
+        assert voltage.current_profile == VoltageProfile.BALANCED
+        print("  ✓ VoltageController singleton works")
+
+        intent_layer = get_intent_layer()
+        assert intent_layer is not None
+        print("  ✓ IntentTechLayer singleton works")
 
         return True
     except Exception as e:
@@ -142,12 +190,14 @@ def main():
 
     print("\n" + "="*70)
     if all_passed:
-        print("  🎉 SDK is ready to use!")
+        print("  🎉 SDK v2.0 is ready to use!")
         print("="*70)
         print("\nNext steps:")
         print("1. Make sure BETTI router is running on http://localhost:18081")
         print("2. Make sure your KIT API is running on http://localhost:8000")
-        print("3. Run: python examples/complete_example.py")
+        print("3. Run examples:")
+        print("   - python examples/complete_example.py")
+        print("   - python examples/advanced_orchestration.py  (NEW v2.0!)")
         print("\nOr start using in your app:")
         print("""
 from tibet_betti_client import TibetBettiClient

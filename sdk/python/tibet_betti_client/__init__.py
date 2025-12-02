@@ -30,8 +30,24 @@ from .context import Context, SenseRule
 from .trust_token import TrustToken, FIRARelationship
 from .websocket import TibetWebSocket
 from .balancer import ClientBalancer, balanced, configure, get_balancer
+from .voltage_controller import (
+    VoltageController,
+    VoltageProfile,
+    ProfileConfig,
+    get_voltage_controller
+)
+from .intent_tech_layer import (
+    IntentTechLayer,
+    IntentParser,
+    SenseRouter,
+    StateManager,
+    ParsedIntent,
+    IntentType,
+    IntentRoute,
+    get_intent_layer
+)
 
-__version__ = "1.0.0"
+__version__ = "2.0.0"  # Major version bump for new features
 __all__ = [
     "TibetBettiClient",
     "Tibet",
@@ -45,5 +61,19 @@ __all__ = [
     "ClientBalancer",
     "balanced",
     "configure",
-    "get_balancer"
+    "get_balancer",
+    # Voltage Control (v2.0)
+    "VoltageController",
+    "VoltageProfile",
+    "ProfileConfig",
+    "get_voltage_controller",
+    # Intent-Tech Layer (v2.0)
+    "IntentTechLayer",
+    "IntentParser",
+    "SenseRouter",
+    "StateManager",
+    "ParsedIntent",
+    "IntentType",
+    "IntentRoute",
+    "get_intent_layer"
 ]
