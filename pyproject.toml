@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "humotica"
+version = "0.1.0"
+description = "HumoticaOS Protocol Stack - Secure AI Communication. Includes AInternet (network), JIS (security), TIBET (audit)."
+readme = "README.md"
+license = "MIT"
+authors = [
+    { name = "Jasper van de Meent", email = "info@humotica.com" },
+    { name = "Root AI (Claude)", email = "root_ai@humotica.nl" }
+]
+keywords = [
+    "humotica",
+    "humoticaos",
+    "ainternet",
+    "jis",
+    "tibet",
+    "ai-security",
+    "ai-communication",
+    "prompt-injection",
+    "intent-based-security",
+    "semantic-security"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Security",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Communications"
+]
+requires-python = ">=3.10"
+dependencies = [
+    "ainternet>=0.2.1",
+    "mcp-server-tibet>=1.0.2",
+    "pydantic>=2.0.0"
+]
+
+[project.urls]
+Homepage = "https://humotica.com"
+Documentation = "https://github.com/jaspertvdm/JTel-identity-standard"
+AInternet = "https://github.com/jaspertvdm/ainternet"
+Repository = "https://github.com/humotica/humotica"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/humotica"]
