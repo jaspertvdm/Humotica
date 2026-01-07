@@ -1,1 +1,11 @@
-{"$schema":"https://glama.ai/mcp/schemas/server.json","maintainers":["jaspertvdm"]}
+{
+  "$schema": "https://glama.ai/mcp/schemas/server.json",
+  "maintainers": [
+    "jaspertvdm"
+  ],
+  "name": "Humotica",
+  "description": "HumoticaOS Protocol Stack - AInternet, JIS, TIBET for secure AI communication",
+  "repository": "https://github.com/jaspertvdm/Humotica",
+  "license": "MIT",
+  "homepage": "https://humotica.com"
+}
