@@ -48,7 +48,7 @@ dependencies = [
 Homepage = "https://humotica.com"
 Documentation = "https://github.com/jaspertvdm/JTel-identity-standard"
 AInternet = "https://github.com/jaspertvdm/ainternet"
-Repository = "https://github.com/humotica/humotica"
+Repository = "https://github.com/jaspertvdm/Humotica"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/humotica"]
