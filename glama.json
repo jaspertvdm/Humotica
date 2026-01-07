@@ -3,7 +3,7 @@
   "maintainers": [
     "jaspertvdm"
   ],
-  "name": "Humotica",
+  "name": "HumoticaOS",
   "description": "HumoticaOS Protocol Stack - AInternet, JIS, TIBET for secure AI communication",
   "repository": "https://github.com/jaspertvdm/Humotica",
   "license": "MIT",
